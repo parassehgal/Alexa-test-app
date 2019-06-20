@@ -1,0 +1,16 @@
+{
+  "name": "alexa_test_app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "alexatest.js",
+  "scripts": {
+    "start": "node alexatest.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.0",
+  },
+  "devDependencies": {},
+  "author": "",
+  "license": "ISC"
+}
