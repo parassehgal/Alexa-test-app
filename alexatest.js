@@ -1,5 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+let alexaVerifier = require('alexa-verifier');
+
 var app = express();
 
 app.use(
@@ -8,7 +10,25 @@ app.use(
 	);
 app.use(bodyParser.json());
 
-app.post('/alexa', function (req, res) {
+function requestVerifier(req, res, next) {
+  alexaVerifier(
+    req.headers.signaturecertchainurl,
+    req.headers.signature,
+    req.rawBody,
+    function verificationCallback(err) {
+      if (err) {
+        res.status(401).json({
+          message: 'Verification Failure',
+          error: err
+        });
+      } else {
+        next();
+      }
+    }
+  );
+}
+
+app.post('/alexa', requestVerifier, function (req, res) {
 	
 	var ans;
 	var v = req.body.request;
